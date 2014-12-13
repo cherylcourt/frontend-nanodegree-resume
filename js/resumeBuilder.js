@@ -9,8 +9,9 @@ var bio = {
 		"location": "Edmonton, Alberta, Canada"
 	},
 	"picture": "images/me.png",
-	"welcomeMessage": "Welcome to my resume!",
-	"skills": ["python", "software development", "TDD"]
+	"welcomeMessage": "I'm currently working as a Software Developer in Edmonton, Alberta, Canada.  I grew up in southern Ontario and moved to Alberta after "+
+	"finishing my undergraduate degree at the University of Windsor. Thanks for stopping by!.",
+	"skills": ["Java", "python", "Software Development", "Test Driven Development", "Retrospective Facilitation"]
 };
 
 var work = {
@@ -27,6 +28,41 @@ var work = {
 			"title": "Systems Analyst",
 			"location": "Edmonton, Alberta, Canada",
 			"datesWorked": "September 2003 - April 2006",
+			"description": "I did stuff here too"
+		},
+		{
+			"employer": "Matrikon",
+			"title": "Programmer",
+			"location": "Edmonton, Alberta, Canada",
+			"datesWorked": "March 2002 - September 2003",
+			"description": "I did stuff here too"
+		},
+		{
+			"employer": "University of Windsor",
+			"title": "Teaching Assisstant / Computer Centre Support / Computer Science Tutor",
+			"location": "Windsor, Ontario, Canada",
+			"datesWorked": "September 1998 - April 2001",
+			"description": "I did stuff here too"
+		},
+		{
+			"employer": "ABB",
+			"title": "Praktikant",
+			"location": "Baden, Switzerland",
+			"datesWorked": "May 2000 - August 2000",
+			"description": "I did stuff here too"
+		},
+		{
+			"employer": "Ontario Power Generation",
+			"title": "Programmer",
+			"location": "Kincardine, Ontario, Canada",
+			"datesWorked": "September 1999 - December 1999",
+			"description": "I did stuff here too"
+		},
+		{
+			"employer": "Cornerstone Technology",
+			"title": "Software Developer",
+			"location": "Windsor, Ontario, Canada",
+			"datesWorked": "May 1998 - April 1999",
 			"description": "I did stuff here too"
 		}
 	]
@@ -47,7 +83,7 @@ var education = {
 		{ "school": "Udacity",
 			"title": "Javascript Basics",
 			"completed": "October 2014",
-			"url": "https://www.udacity.com/course/ud304"
+			"url": "https://www.udacity.com/course/ud804"
 		},
 		{ "school": "Udacity",
 			"title": "Intro to HTML and CSS",
@@ -68,13 +104,15 @@ var projects = {
 			"title": "Online Portfolio",
 			"datesWorked": "October 2014",
 			"description": "Created an online portfolio of work",
-			"images": ["http://placehold.it/350x150"]
+			"images": ["images/zen_garden_crop.png"],
+			"url": "http://cherylcourt.tctimmeh.webfactional.com/"
 		},
 		{
 			"title": "Web Development Wiki",
 			"datesWorked": "June 2014 - August 2014",
 			"description": "Created an online wiki for the Udacity Web Development Course",
-			"images": ["images/web.jpg"]
+			"images": ["images/web.jpg"],
+			"url": "http://helpful-kit-572.appspot.com/"
 		}
 	]
 };
@@ -108,6 +146,7 @@ if(bio.skills.length > 0) {
 
 for(i in formattedContactInfo) {
 	$("#topContacts").append(formattedContactInfo[i]);
+	$("#footerContacts").append(formattedContactInfo[i]);
 }
 
 
@@ -144,7 +183,7 @@ projects.display = function() {
 		for(i in projects.projects) {
 			$("#projects").append(HTMLprojectStart);
 
-			var formattedProjectTitle = HTMLprojectTitle.replace("%data%", projects.projects[i].title);
+			var formattedProjectTitle = HTMLprojectTitle.replace("%data%", projects.projects[i].title).replace("#", projects.projects[i].url);
 			var formattedProjectDates = HTMLprojectDates.replace("%data%", projects.projects[i].datesWorked);
 			var formattedProjectDescription = HTMLprojectDescription.replace("%data%", projects.projects[i].description);
 
@@ -164,5 +203,46 @@ projects.display = function() {
 
 projects.display();
 
+education.display = function() {
+	if(education.schools.length > 0 || education.onlineCourses.length > 0) {
+		for(i in education.schools) {
+			$("#education").append(HTMLschoolStart);
+
+			var formattedSchoolName = HTMLschoolName.replace("%data%", education.schools[i].name).replace("#", education.schools[i].url);
+			var formattedSchoolDegree = HTMLschoolDegree.replace("%data%", education.schools[i].degree);
+			var formattedSchoolDates = HTMLschoolDates.replace("%data%", education.schools[i].datesAttended);
+			var formattedSchoolLocation = HTMLschoolLocation.replace("%data%", education.schools[i].location);			
+			var formattedSchoolMajor = HTMLschoolMajor.replace("%data%", education.schools[i].major);
+			var formattedSchoolMinor = HTMLschoolMinor.replace("%data%", education.schools[i].minor);
+
+			$(".education-entry:last").append(formattedSchoolName + formattedSchoolDegree);
+			$(".education-entry:last").append(formattedSchoolDates);
+			$(".education-entry:last").append(formattedSchoolLocation);
+			$(".education-entry:last").append(formattedSchoolMajor);
+			$(".education-entry:last").append(formattedSchoolMinor);
+		}
+
+		if(education.onlineCourses.length > 0) {
+			$("#education").append(HTMLonlineClasses);
+			for(i in education.onlineCourses) {				
+				$("#education").append(HTMLschoolStart);
+				var formattedOnlineTitle = HTMLonlineTitle.replace("%data%", education.onlineCourses[i].title).replace("#", education.onlineCourses[i].url);
+				var formattedOnlineSchool = HTMLonlineSchool.replace("%data%", education.onlineCourses[i].school);
+				var formattedOnlineDates = HTMLonlineDates.replace("%data%", education.onlineCourses[i].completed);
+				var formattedOnlineURL = HTMLonlineURL.replace("%data%", education.onlineCourses[i].url).replace("#", education.onlineCourses[i].url);
+
+				$(".education-entry:last").append(formattedOnlineTitle + formattedOnlineSchool);
+				$(".education-entry:last").append(formattedOnlineDates);
+				$(".education-entry:last").append(formattedOnlineURL);
+			}
+		}
+		
+	}
+}
+
+education.display();
+
+
 $("#mapDiv").append(googleMap);
+
 
