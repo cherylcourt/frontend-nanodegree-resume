@@ -2,7 +2,6 @@ var bio = {
 	"name": "Cheryl Court",
 	"role": "Web Developer",
 	"contacts": {
-		"mobile": "123-456-789",
 		"email": "cheryl.court@gmail.com",
 		"github": "cherylcourt",
 		"twitter": "@cherylcourt",
@@ -10,7 +9,7 @@ var bio = {
 	},
 	"picture": "images/me.png",
 	"welcomeMessage": "I'm currently working as a Software Developer in Edmonton, Alberta, Canada.  I grew up in southern Ontario and moved to Alberta after "+
-	"finishing my undergraduate degree at the University of Windsor. Thanks for stopping by!.",
+	"finishing my undergraduate degree at the University of Windsor. Thanks for stopping by!",
 	"skills": ["Java", "python", "Software Development", "Test Driven Development", "Retrospective Facilitation"]
 };
 
@@ -124,7 +123,6 @@ var formattedBioPic = HTMLbioPic.replace("%data%", bio.picture);
 var formattedWelcomeMsg = HTMLWelcomeMsg.replace("%data%", bio.welcomeMessage);
 
 var formattedContactInfo = [];
-formattedContactInfo.push(HTMLmobile.replace("%data%", bio.contacts.mobile));
 formattedContactInfo.push(HTMLemail.replace("%data%", bio.contacts.email));
 formattedContactInfo.push(HTMLgithub.replace("%data%", bio.contacts.github));
 formattedContactInfo.push(HTMLtwitter.replace("%data%", bio.contacts.twitter));
@@ -241,6 +239,129 @@ education.display = function() {
 }
 
 education.display();
+
+/**
+ * Skills Chart
+ */
+$(function () {
+    $('#container').highcharts({
+        chart: {
+            type: 'scatter',
+            zoomType: 'xy'
+        },
+        title: {
+            text: 'Skills'
+        },
+        xAxis: {
+            title: {
+                enabled: true,
+                text: 'Used (year)'
+            },
+            startOnTick: true,
+            endOnTick: true,
+            showLastLabel: true
+        },
+        yAxis: {
+            title: {
+                text: 'Duration (months)'
+            }
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'left',
+            verticalAlign: 'top',
+            x: 250,
+            y: 0,
+            floating: true,
+            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
+            borderWidth: 1
+        },
+        plotOptions: {
+            scatter: {
+                marker: {
+                    radius: 5,
+                    states: {
+                        hover: {
+                            enabled: true,
+                            lineColor: 'rgb(100,100,100)'
+                        }
+                    }
+                },
+                states: {
+                    hover: {
+                        marker: {
+                            enabled: false
+                        }
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<b>{series.name}</b><br>',
+                    pointFormat: 'Used in {point.x} for {point.y} month(s)'
+                }
+			}
+		},
+		series: [{
+				name: 'Java',
+				color: 'rgba(223, 83, 83, .5)',
+				data: [[2014, 11], [2013, 11], [2012, 11], [2011, 8], [2010, 4], [2009, 12], [1998, 8], [1999, 8], [2000, 4]]
+			},
+			{
+				name: 'python',
+				color: 'rgba(119, 152, 191, .5)',
+				data: [[2014, 1], [2013, 1], [2012, 1], [2011, 1]]
+			},
+			{
+				name: 'SQL',
+				color: 'rgba(119, 152, 80, .5)',
+				data: [[2013, 2]]
+			},
+			{
+				name: 'PL/SQL',
+				color: 'rgba(170, 162, 30, .5)',
+				data: [[2010, 2], [2006, 4]]
+			},
+			{
+				name: 'C++',
+				color: 'rgba(0, 102, 0, .5)',
+				data: [[2004, 12], [2003, 6]]
+			},
+			{
+				name: 'C',
+				color: 'rgba(0, 102, 0, .5)',
+				data: [[1997, 8], [2004, 2], [2008, 4]]
+			},
+			{
+				name: 'Javascript',
+				color: 'rgba(204, 0, 0, .5)',
+				data: [[2014, 1]]
+			},
+			{
+				name: 'HTML/CSS',
+				color: 'rgba(153, 51, 0, .5)',
+				data: [[2014, 5], [2002, 3], [2008, 4], [2005, 2]]
+			},
+			{
+				name: 'Web Development',
+				color: 'rgba(0, 153, 102, .5)',
+				data: [[2014, 2]]
+			},
+			{
+				name: 'TDD',
+				color: 'rgba(0, 102, 51, .5)',
+				data: [[2014, 12], [2013, 12], [2012, 12], [2011, 4]]
+			},
+			{
+				name: 'Django',
+				color: 'rgba(204, 102, 0, .5)',
+				data: [[2013, 2.5]]
+			},
+			{
+				name: 'Perl',
+				color: 'rgba(210, 200, 0, .5)',
+				data: [[2011, 3], [2013, 1], [2012, 1], [2014, 1]]
+			}]
+	});
+});
 
 
 $("#mapDiv").append(googleMap);
